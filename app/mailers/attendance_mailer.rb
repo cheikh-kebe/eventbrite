@@ -1,6 +1,6 @@
 class AttendanceMailer < ApplicationMailer
 
-  default from: 'bousquet.valentin@gmail.com'
+  default from: 'crazyrabitt.01@gmail.com'
  
   def new_guest_email(attendance)
     #on récupère l'instance user pour ensuite pouvoir la passer à la view en @user
