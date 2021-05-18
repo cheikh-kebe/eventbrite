@@ -7,7 +7,7 @@ Rails.application.initialize!
 ActionMailer::Base.smtp_settings = {
   :user_name => ENV['SENDGRID_LOGIN'],
   :password => ENV['SENDGRID_PWD'],
-  :domain => 'https://eventbrite-thp-s7-j1.herokuapp.com/',
+  :domain => 'https://frozen-tundra-93397.herokuapp.com/',
   :address => 'smtp.sendgrid.net',
   :port => 587,
   :authentication => :plain,
