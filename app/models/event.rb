@@ -1,5 +1,4 @@
 require 'date_validator'
-
 class Event < ApplicationRecord
 
   validates :start_date, presence: true #date: { after: { Date.today } }

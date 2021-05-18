@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ show edit update destroy ]
-
+  before_action :user_authorized?, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: %i[ new edit update destroy create ]
   # GET /users or /users.json
   def index
     @users = User.all
@@ -8,6 +9,7 @@ class UsersController < ApplicationController
 
   # GET /users/1 or /users/1.json
   def show
+    @events = Event.all
   end
 
   # GET /users/new
@@ -65,5 +67,16 @@ class UsersController < ApplicationController
     # Only allow a list of trusted parameters through.
     def user_params
       params.require(:user).permit(:email, :encrypted_password, :description, :first_name, :last_name)
+    end
+
+    def user_authorized?
+      @user = User.find(params[:id])
+      if @user.id == current_user.id
+        return true 
+      else
+        flash[:danger] = "Accès interdit !"
+        redirect_to events_path
+        return false
+      end 
     end
 end

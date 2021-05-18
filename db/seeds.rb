@@ -7,16 +7,13 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require 'faker'
 
-User.destroy_all
-Event.destroy_all
-Attendance.destroy_all
-
 10.times do
   user = User.create!(
     first_name: Faker::Name.first_name, 
     last_name: Faker::Name.last_name, 
     description: Faker::Quotes::Shakespeare.hamlet_quote, 
-    email: "test#{rand(1..100)}@yopmail.com"
+    email: "test#{rand(1..100)}@yopmail.com",
+    password: "Shanksthered"
   ) 
 end
 

@@ -1,6 +1,11 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+    <strong>Administrateur:</strong>
+    <a href="<%= user_path(@event.admin.id)%>"><%= @event.admin.email %></a>
+</p>
+
+<p>
   <strong>Start date:</strong>
   <%= @event.start_date %>
 </p>
