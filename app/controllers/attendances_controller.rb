@@ -13,6 +13,7 @@ class AttendancesController < ApplicationController
   # GET /attendances/new
   def new
     @attendance = Attendance.new
+    @event = Event.find(params[:event_id])
   end
 
   # GET /attendances/1/edit
@@ -25,7 +26,7 @@ class AttendancesController < ApplicationController
 
     respond_to do |format|
       if @attendance.save
-        format.html { redirect_to @attendance, notice: "Attendance was successfully created." }
+        format.html { redirect_to root_path, notice: "Attendance was successfully created." }
         format.json { render :show, status: :created, location: @attendance }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -64,6 +65,6 @@ class AttendancesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def attendance_params
-      params.require(:attendance).permit(:stripe_customer_id)
+      params.permit(:stripe_customer_id, :guest_id, :event_id)
     end
 end

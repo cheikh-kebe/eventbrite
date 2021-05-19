@@ -1,11 +1,6 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-    <strong>Administrateur:</strong>
-    <a href="<%= user_path(@event.admin.id)%>"><%= @event.admin.email %></a>
-</p>
-
-<p>
   <strong>Start date:</strong>
   <%= @event.start_date %>
 </p>
@@ -34,6 +29,36 @@
   <strong>Location:</strong>
   <%= @event.location %>
 </p>
+
+<% if user_signed_in? && current_user.id == @event.admin.id %>
+
+  <p>    
+    <strong class="text-success">TU EST L'ADMNISTRATEUR DE CET ÉVÈNEMENT</strong>
+  </p>
+
+  <% elsif user_signed_in? && current_user.id != @event.admin.id %>
+
+  <p>
+    <strong>Administrateur:</strong>
+    <a href="<%= user_path(@event.admin.id)%>"><%= @event.admin.email %></a>
+  </p>
+
+  <p>    
+    <a href="<%= new_event_attendance_path(params[:id]) %>"><strong>PARTICIPER À L'ÉVÈNEMENT</strong></a>
+  </p>
+
+  <% else %>
+
+  <p>
+    <strong>Administrateur:</strong>
+    <a href="<%= user_path(@event.admin.id)%>"><%= @event.admin.email %></a>
+  </p>
+
+  <p>    
+    <a href="<%= new_user_session_path %>"><strong>SE CONNECTER POUR PARTICIPER À L'ÉVÈNEMENT</strong></a>
+  </p>
+
+  <% end %>
 
 <%= link_to 'Edit', edit_event_path(@event) %> |
 <%= link_to 'Back', events_path %>

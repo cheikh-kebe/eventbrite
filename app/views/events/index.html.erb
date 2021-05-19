@@ -3,25 +3,13 @@
 <h1>Events</h1>
 
 <table>
-  <thead>
-    <tr>
-      <th>Start date</th>
-      <th>Duration</th>
-      <th></th>
-      <th>Description</th>
-      <th>Price</th>
-      <th>Location</th>
-      <th colspan="6"></th>
-    </tr>
-  </thead>
-
   <tbody>
     <% @events.each do |event| %>
     <div class="card" style="width: 18rem;">
       <div class="card-body">
         <h5 class="card-title">Thème: <%= event.title %></h5>
         <h6 class="card-subtitle mb-2 text-muted">Lieu: <%= event.location %></h6>
-          <a <%= link_to 'dites men plu', event %></a>
+          <a <%= link_to 'Dites men plus!', event %></a>
       </div>
     </div>
     <% end %>
