@@ -33,7 +33,7 @@
 <% if user_signed_in? && current_user.id == @event.admin.id %>
 
   <p>    
-    <strong class="text-success">TU EST L'ADMNISTRATEUR DE CET ÉVÈNEMENT</strong>
+    <strong class="text-success">TU ES L'ADMNISTRATEUR DE CET ÉVÈNEMENT</strong>
   </p>
 
   <% elsif user_signed_in? && current_user.id != @event.admin.id %>
@@ -42,6 +42,13 @@
     <strong>Administrateur:</strong>
     <a href="<%= user_path(@event.admin.id)%>"><%= @event.admin.email %></a>
   </p>
+
+  <% if @participated.include? current_user.id %>
+    <button type="button" class="btn btn-success">Vous participez bien à l'évènement</button>
+  <% else %>
+  <p><%= link_to "S'inscrire à l'évènement", new_event_attendance_path(params[:id]), :class=>"btn btn-dark btn-rounded" %>
+  </p>
+  <% end %>
 
   <p>    
     <a href="<%= new_event_attendance_path(params[:id]) %>"><strong>PARTICIPER À L'ÉVÈNEMENT</strong></a>
@@ -57,8 +64,7 @@
   <p>    
     <a href="<%= new_user_session_path %>"><strong>SE CONNECTER POUR PARTICIPER À L'ÉVÈNEMENT</strong></a>
   </p>
-
   <% end %>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
+<%= link_to 'Edit', event_attendance_path(@event) %> |
 <%= link_to 'Back', events_path %>

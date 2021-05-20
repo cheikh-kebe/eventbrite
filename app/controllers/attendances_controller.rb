@@ -1,5 +1,7 @@
 class AttendancesController < ApplicationController
+  
   before_action :set_attendance, only: %i[ show edit update destroy ]
+
 
   # GET /attendances or /attendances.json
   def index
@@ -8,33 +10,63 @@ class AttendancesController < ApplicationController
 
   # GET /attendances/1 or /attendances/1.json
   def show
+    @attendance = Attendance.find(@attendance.id)
   end
 
   # GET /attendances/new
   def new
+    @user = current_user
     @attendance = Attendance.new
     @event = Event.find(params[:event_id])
   end
 
   # GET /attendances/1/edit
   def edit
+    @event = Event.find(params[:event_id])
   end
 
   # POST /attendances or /attendances.json
   def create
     @attendance = Attendance.new(attendance_params)
-
-    respond_to do |format|
-      if @attendance.save
-        format.html { redirect_to root_path, notice: "Attendance was successfully created." }
-        format.json { render :show, status: :created, location: @attendance }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @attendance.errors, status: :unprocessable_entity }
-      end
+    @user = current_user
+    #_____ script stripe
+      
+    @event = Event.find(params[:event_id])
+    @amount = @event.price
+    @stripe_amount = (@amount * 100).to_i
+      
+    begin
+      customer = Stripe::Customer.create({
+      email: params[:stripeEmail],
+      source: params[:stripeToken],
+      })
+      charge = Stripe::Charge.create({
+      customer: customer.id,
+      amount: @stripe_amount,
+      description: "Achat d'un produit",
+      currency: 'eur',
+      })
+    rescue Stripe::CardError => e
+      flash[:error] = e.message
+      redirect_to new_order_path
     end
-  end
-
+    
+    @stripe_customer_id = customer.id
+      # --- reponse to
+        respond_to do |format|
+          if @attendance.save 
+           format.html { redirect_to event_attendance_path(params[:event_id],@attendance.id), notice: "Attendance was successfully created." }
+           format.json { render :show, status: :created, location: @attendance }
+           a = Attendance.find(@attendance.id)
+           a = a.update(stripe_customer_id: @stripe_customer_id)
+         else
+           format.html { render :new, status: :unprocessable_entity }
+           format.json { render json: @attendance.errors, status: :unprocessable_entity }
+         end
+        end
+        
+      end
+    
   # PATCH/PUT /attendances/1 or /attendances/1.json
   def update
     respond_to do |format|
@@ -65,6 +97,6 @@ class AttendancesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def attendance_params
-      params.permit(:stripe_customer_id, :guest_id, :event_id)
+      params.permit(:event_id, :guest_id)
     end
 end
