@@ -35,7 +35,7 @@
   <p>    
     <strong class="text-success">TU ES L'ADMNISTRATEUR DE CET ÉVÈNEMENT</strong>
   </p>
-
+  <%= link_to 'Voir la liste des participants', event_attendances_path(@event.id), :class=>"btn btn-warning btn-rounded" %>
   <% elsif user_signed_in? && current_user.id != @event.admin.id %>
 
   <p>

@@ -70,6 +70,6 @@ class EventsController < ApplicationController
     end
 
     def participated?
-      Event.find(params['id']).guest_ids
+      Event.find(params[:id]).guests.ids
     end
 end
