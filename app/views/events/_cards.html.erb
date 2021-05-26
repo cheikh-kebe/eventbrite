@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div class="row align-middle shadow p-3 mb-5 mt-5 justify-content-center">
+      <% @events.each do |event| %>
+        <div class="card mt-5 ms-5 me-5" style="width: 18rem;">
+          <%= image_tag("glare.jpg", :alt => "stars") %>
+          <div class="card-body mt-3">
+            <h4 class="card-title">Titre de l'évent <%= event.title %></h4>
+            <h6 class="card-subtitle mb-2 ">Lieu: <%= event.location %></h6>
+            <%= link_to 'Montrez moi!', event %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </body>
+</html>

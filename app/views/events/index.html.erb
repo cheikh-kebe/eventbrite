@@ -1,15 +1,7 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Bienvenue sur <span>EVENTBRITE/THP</span> </h1>
-
-<div class="row align-middle shadow p-3 mb-5 justify-content-center">
-    <% @events.each do |event| %>
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">Thème: <%= event.title %></h5>
-        <h6 class="card-subtitle mb-2 text-muted">Lieu: <%= event.location %></h6>
-          <a <%= link_to 'Dites men plus!', event %></a>
-      </div>
-    </div>
-    <% end %>
-</div>
+<!DOCTYPE html>
+<html>
+  <body>
+    <%=render "banner"%>
+    <%=render "cards"%>
+  </body>
+</html>

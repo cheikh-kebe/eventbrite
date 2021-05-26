@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<header>
+  <nav class="ms-5 me-5 mt-5 mb-5 navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="<%=events_path%>">EventBrite/thp</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link text-light" href="<%= new_event_path %>">Créer Event</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+              aria-expanded="false">Identification</a>
+            <div class="dropdown-menu">
+            <%if user_signed_in? %>
+              <a class="dropdown-item" <%= link_to "Profil",user_path(current_user.id)%></a>
+              <a class="dropdown-item" <%= link_to "Deconnexion",destroy_user_session_path, method: :delete%></a>
+            <%else%>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="<%= new_user_registration_path %>">S'incrire</a>
+              <a class="dropdown-item" href="<%= new_user_session_path %>">Se Connecter</a>
+            <%end%>
+            </div>
+          </li>
+        </ul>
+        <form class="d-flex">
+          <input class="form-control me-sm-2" type="text" placeholder="Search">
+          <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</header>
+</html>
